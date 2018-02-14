@@ -1,23 +1,32 @@
 const express = require('express');
-const app = express();
+const app = express();  // создаем объект приложения
 const hbs = require('hbs');
 const router = require('./router');
 const path = require('path');
 const port = 8000;
 
 app.set('views', path.join(__dirname, '..', 'public_html/views'));
-app.set('view engine', 'html');
+// Приложения Express для определения визуального интерфейса использует не стандартные файлы html,
+// а специальные сущности - представления, из которых затем создаются html-файлы
+// Управляет представлениями специальный компонент - движок представлений (view engine)
+app.set('view engine', 'html'); // для использования расширения .html для шаблона
 app.engine('html', require('hbs').__express);
-hbs.registerPartials(__dirname + '../public_html/views');
-
+// express.static() указывает на каталог со статическими файлами
+// Чтобы встроить компонент express.static в процесс обработки запроса, вызывается функция app.use().
+// Эта функция позволяет добавлять различные компоненты, которые еще называются middleware, в конвейер обработки запроса:
 app.use(express.static(path.join(__dirname, '..', 'public_html/assets')));
-app.use(router);
 
+app.use(router);
+// Функция, которая передается в app.use(), принимает три параметра:
+// request: данные запроса
+// response: объект для управления ответом
+// next: следующая в конвейере обработки функция
 app.use((req, res, next) => {
   res
     .status(404)
     .send('404 Page not found!');
 });
+
 app.use((err, req, res, next) => {
   res
     .status(err.status || 500)

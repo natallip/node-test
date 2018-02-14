@@ -1,0 +1,12 @@
+{
+  "mail": {
+    "subject": "Сообщение с сайта node-test",
+    "smtp": {
+      "service": "Gmail",
+      "auth": {
+        "user": "mySuperTest8@gmail.com",
+        "pass": "s5gg2t5ewa"
+      }
+    }
+  }
+}
