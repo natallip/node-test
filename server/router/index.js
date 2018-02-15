@@ -16,13 +16,13 @@ router.get('/', (req, res) => {  // определяем обработчик д
   res.render('index', data);   // отправляем ответ
 });
 router.get('/about', (req, res) => {
-  res.render('about', {title: 'About'});
+  res.render('about', { title: 'About' });
 });
 router.get('/contact-me', (req, res) => {
-  res.render('contact-me', {title: 'Contact me'});
+  res.render('contact-me', { title: 'Contact me' });
 });
 router.get('/send-mail', (req, res) => {
-  res.render('send-mail', {title: 'Contact me'});
+  res.render('send-mail', { title: 'Contact me' });
 });
 
 // Первый параметр функции - адрес, на который идет отправка - "/contact-me".
@@ -34,7 +34,7 @@ router.post('/contact-me', urlencodedParser, (req, res) => {
   console.log(111, req.body, config.mail.subject);
   if (!req.body.email || !req.body.subject || !req.body.message) { //требуем наличия имени, обратной почты и текста
     //если что-либо не указано - сообщаем об этом
-    res.render('send-mail', {error: 'Specify the data'});
+    res.render('contact-me', { error: 'Specify the data' });
     return res.status(400);
   }
   //инициализируем модуль для отправки писем и указываем данные из конфига
@@ -60,9 +60,10 @@ router.post('/contact-me', urlencodedParser, (req, res) => {
     if (error) {
       console.log(error);
       res.status(400);
-      res.render('send-mail', {error: msg.error, title: 'Contact me'});
+      res.render('contact-me', { error: msg.error, title: 'Contact me' });
     }
-    res.render('send-mail', {success: msg.success, title: 'Contact me'});
+    res.render('contact-me', { success: msg.success, title: 'Contact me' });
   });
 });
+
 module.exports = router;

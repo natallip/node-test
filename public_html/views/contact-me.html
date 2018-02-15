@@ -25,8 +25,15 @@
     </div>
   </nav>
   <br>
-  <form method="POST" action="/contact-me">
+  {{#if error}}
+    <div class="alert alert-danger" role="alert">{{ error }}</div>
+  {{/if}}
+  {{#if success}}
+    <div class="alert alert-success" role="alert">{{ success }}</div>
+  {{/if}}
 
+
+  <form method="POST" action="/contact-me">
     <div class="form-group">
       <input type="email" name="email" class="form-control" placeholder="Enter year email">
     </div>

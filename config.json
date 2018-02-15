@@ -4,8 +4,8 @@
     "smtp": {
       "service": "Gmail",
       "auth": {
-        "user": "mySuperTest8@gmail.com",
-        "pass": "s5gg2t5ewa"
+        "user": "homer.test01@gmail.com",
+        "pass": "homertest"
       }
     }
   }
