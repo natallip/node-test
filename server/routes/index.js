@@ -31,7 +31,7 @@ router.get('/send-mail', (req, res) => {
 router.post('/contact-me', urlencodedParser, (req, res) => {
   const nodemailer = require('nodemailer');
   const config = require('../../config.json');
-  console.log(111, req.body, config.mail.subject);
+  // console.log(111, req.body, config.mail.subject);
   if (!req.body.email || !req.body.subject || !req.body.message) { //требуем наличия имени, обратной почты и текста
     //если что-либо не указано - сообщаем об этом
     res.render('contact-me', { error: 'Specify the data' });
@@ -51,7 +51,6 @@ router.post('/contact-me', urlencodedParser, (req, res) => {
   };
   //отправляем почту
   transporter.sendMail(mailOptions, (error, info) => {
-    console.log(info);
     let msg = {
       success: 'successfully sent',
       error: 'not send'
@@ -62,7 +61,7 @@ router.post('/contact-me', urlencodedParser, (req, res) => {
       res.status(400);
       res.render('contact-me', { error: msg.error, title: 'Contact me' });
     }
-    res.render('contact-me', { success: msg.success, title: 'Contact me' });
+    return res.render('contact-me', { success: msg.success, title: 'Contact me' });
   });
 });
 
