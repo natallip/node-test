@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const router = require('express').Router();
 // Класс express.Router позволяет определить маршрут, в рамках которого можно создавать подмаршруты, которые связаны со своими обработчиками.
 const bodyParser = require('body-parser');
@@ -63,6 +64,27 @@ router.post('/contact-me', urlencodedParser, (req, res) => {
     }
     return res.render('contact-me', { success: msg.success, title: 'Contact me' });
   });
+
+  ////////////////////
+  //создаем новую запись в базу данным и передаем в нее поля из формы
+  const Model = mongoose.model('Item', 'mail');
+  let item = new Model({email: req.body.email, subject: req.body.subject, message: req.body.message});
+  item.save().then(
+    //обрабатываем и отправляем ответ в браузер
+    (i) => {
+      // return res.json({status: 'Запись успешно добавлена'});
+    }, e => {
+      //если есть ошибки, то получаем их список и так же передаем в шаблон
+      const error = Object
+        .keys(e.errors)
+        .map(key => e.errors[key].message)
+        .join(', ');
+
+      //обрабатываем шаблон и отправляем его в браузер
+      // res.json({
+        // status: 'При добавление записи произошла ошибка: ' + error
+      });
+
 });
 
 module.exports = router;

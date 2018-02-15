@@ -49,7 +49,7 @@ app.use((err, req, res, next) => {
 MongoClient.connect('mongodb://localhost:27017/node-test', (err, database) => {
   if (err) return console.log(err);
   db = database;
-  require('../models/mail');
+  // require('../models/mail');
   app.listen(port, () => {
     console.log('We are live on ' + port);
   });
