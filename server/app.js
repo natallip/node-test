@@ -1,20 +1,20 @@
 const express = require('express');
-const app = express();  // создаем объект приложения
-const hbs = require('hbs');
+const app = express();
+// создаем объект приложения
+// const hbs = require('hbs');
 const router = require('./routes');
 const path = require('path');
-const port = 8000;
-const MongoClient = require('mongodb').MongoClient;
-let db;
-//подключаем модули
+const port = 8080;
+// const MongoClient = require('mongodb').MongoClient;
+// let db;
+// подключаем модули
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/node-test')
   .then(() => console.log('MongoDB has started'))
   .catch(e => console.log(e));
 
-//require('./models/db-close');
-//подключаем модели(сущности, описывающие коллекции базы данных)
+// подключаем модели(сущности, описывающие коллекции базы данных)
 require('../models/mail');
 
 app.set('views', path.join(__dirname, '..', 'public_html/views'));
@@ -44,13 +44,15 @@ app.use((err, req, res, next) => {
     .status(err.status || 500)
     .send(err.message || '500 Server error');
 });
-
-
-MongoClient.connect('mongodb://localhost:27017/node-test', (err, database) => {
-  if (err) return console.log(err);
-  db = database;
-  // require('../models/mail');
-  app.listen(port, () => {
-    console.log('We are live on ' + port);
-  });
+app.listen(port, () => {
+  console.log('We are live on ' + port);
 });
+//
+// MongoClient.connect('mongodb://localhost:27017/node-test', (err, database) => {
+//   if (err) return console.log(err);
+//   db = database;
+//   // require('../models/mail');
+//   app.listen(port, () => {
+//     console.log('We are live on ' + port);
+//   });
+// });

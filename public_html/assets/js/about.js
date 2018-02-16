@@ -1,1 +1,1 @@
-console.log('Hello to \"about\" page');
+console.log('Hello to "about" page');
