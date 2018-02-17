@@ -1,5 +1,7 @@
-// const express = require('express');
-const mongoose = require('mongoose');
+const low = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
+const adapter = new FileSync('db.json');
+const db = low(adapter);
 const router = require('express').Router();
 // Класс express.Router позволяет определить маршрут, в рамках которого можно создавать подмаршруты, которые связаны со своими обработчиками.
 const bodyParser = require('body-parser');
@@ -7,7 +9,7 @@ const bodyParser = require('body-parser');
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 // Поскольку данные отправляются с помощью формы, то для создания парсера применяется функция urlencoded().
 // В эту функцию передается объект, устанавливающий параметры парсинга.
-// Значение extended: false указывает, что объект - результат парсинга будет представлять набор пар ключ-значение, а каждое значение может быть представлено в виде строки или массива.
+// extended: false указывает, что объект - результат парсинга будет представлять набор пар ключ-значение, а каждое значение может быть представлено в виде строки или массива.
 
 router.get('/', (req, res) => {
   // определяем обработчик для маршрута "/"
@@ -65,31 +67,15 @@ router.post('/contact-me', urlencodedParser, (req, res) => {
       return res.render('contact-me', { error: msg.error, title: 'Contact me' });
     }
     // создаем новую запись в базу данным и передаем в нее поля из формы
-    const Model = mongoose.model('Item', 'mail');
-    let item = new Model({email: req.body.email, subject: req.body.subject, message: req.body.message});
-    item.save();
+    if (!db.get('items').value()) {
+      // если db.json пустой, задаем значения по умолчанию
+      db.defaults({ items: [] }).write();
+    }
+    db.get('items')
+      .push({ email: req.body.email, subject: req.body.subject, message: req.body.message })
+      .write();
     return res.render('contact-me', { success: msg.success, title: 'Contact me' });
   });
-
-  // создаем новую запись в базу данным и передаем в нее поля из формы
-  // const Model = mongoose.model('Item', 'mail');
-  // let item = new Model({email: req.body.email, subject: req.body.subject, message: req.body.message});
-  // item.save();
-  // .then(
-  // обрабатываем и отправляем ответ в браузер
-  // (i) => {
-  // return res.json({status: 'Запись успешно добавлена'});
-  // }, e => {
-  // если есть ошибки, то получаем их список и так же передаем в шаблон
-  // let error = Object
-  //   .keys(e.errors)
-  //   .map(key => e.errors[key].message)
-  //   .join(', ');
-
-  // обрабатываем шаблон и отправляем его в браузер
-  // res.json({
-  // status: 'При добавление записи произошла ошибка: ' + error
-  // });
 });
 
 module.exports = router;

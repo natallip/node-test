@@ -1,0 +1,14 @@
+{
+  "items": [
+    {
+      "email": "example@mail.ru",
+      "subject": "gaga",
+      "message": "xxx"
+    },
+    {
+      "email": "eee@mail.ru",
+      "subject": "bob",
+      "message": "ccc"
+    }
+  ]
+}
