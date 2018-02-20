@@ -1,8 +1,10 @@
 {
+  "mongodb": "mongodb://admin:admin@ds233238.mlab.com:33238/node-test",
   "mail": {
     "subject": "Сообщение с сайта node-test",
     "smtp": {
       "service": "Gmail",
+      "secure": true,
       "auth": {
         "user": "mySuperTest8@gmail.com",
         "pass": "s5gg2t5ewa"
