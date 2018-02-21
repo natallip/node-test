@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const PhotoSchema = mongoose.Schema({
+const PhotoSchema = new mongoose.Schema({
   title: {
     type: String,
     required: [true, 'Укажите название']

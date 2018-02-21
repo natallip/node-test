@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const EmailSchema = mongoose.Schema({
+const EmailSchema = new mongoose.Schema({
   email: {
     type: String,
     required: [true, 'Укажите ваш email']
@@ -14,4 +14,4 @@ const EmailSchema = mongoose.Schema({
   }
 });
 // просим mongoose сохранить модель для ее дальнейшего использования
-module.exports = mongoose.model('Emails', EmailSchema);
+module.exports = mongoose.model('Email', EmailSchema);
