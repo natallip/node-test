@@ -7,11 +7,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  let name = req.body.name;
-  let email = req.body.email;
-  let username = req.body.username;
-  let password = req.body.password;
-  let password2 = req.body.password2;
+  const { name, username, email, password, password2 } = req.body;
 
   // Validation
   req.checkBody('name', 'Name is required').notEmpty();
@@ -24,9 +20,7 @@ router.post('/', (req, res) => {
   let errors = req.validationErrors();
 
   if (errors) {
-    res.render('register', {
-      errors
-    });
+    res.render('register', {errors, title: 'Register'});
   } else {
     let newUser = new User({
       name,
@@ -41,7 +35,6 @@ router.post('/', (req, res) => {
     });
 
     req.flash('success_msg', 'You are registered and can now login');
-
     res.redirect('../login');
   }
 });

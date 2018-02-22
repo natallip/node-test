@@ -5,12 +5,10 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const port = 8080;
 const mongoose = require('mongoose');
-const cookieParser = require('cookie-parser');
 const expressValidator = require('express-validator');
-var flash = require('connect-flash');
-var session = require('express-session');
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
+const flash = require('connect-flash');
+const session = require('express-session');
+const passport = require('passport');
 
 mongoose.Promise = global.Promise;
 mongoose.connect(config.mongodb)
